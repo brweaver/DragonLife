@@ -4,8 +4,8 @@ import org.cosplay.CPColor.*
 import org.cosplay.CPPixel.*
 import org.cosplay.prefabs.scenes.CPFadeShimmerLogoScene
 
-val BLUE_BLACK = CPColor("0x00000F")
-val BG_PX = '.'&&(C_GRAY18, BLUE_BLACK)
+val BLUE_BLACK: CPColor = CPColor("0x00000F")
+val BG_PX: CPPixel = '.'&&(C_GRAY18, BLUE_BLACK)
 //var audioOn = true // By default, the audio is ON.
 
 object DragonLifeGame:
