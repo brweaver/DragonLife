@@ -23,8 +23,8 @@ object DragonLifeGame:
     // Start the game & wait for exit.
     try
       CPEngine.startGame(
-        new CPFadeShimmerLogoScene("logo", None, BG_PX, CS, "title"),
-        //DragonLifePlayScene,
+        //new CPFadeShimmerLogoScene("logo", None, BG_PX, CS, "title"),
+        DragonLifePlayScene,
       )
     finally CPEngine.dispose()
 
