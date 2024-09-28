@@ -4,6 +4,7 @@ import org.cosplay.games.pong.CPPongPlayScene.addObjects
 import org.cosplay.prefabs.shaders.*
 import org.cosplay.*
 import org.cosplay.CPArrayImage.*
+import org.cosplay.CPColor.C_DARK_CYAN
 import org.cosplay.CPPixel.*
 
 object DragonLifePlayScene extends CPScene("play", None, BG_PX):
@@ -14,30 +15,33 @@ object DragonLifePlayScene extends CPScene("play", None, BG_PX):
 
   private var xLocation = 10
   private var yLocation = 10
+  private var xSpeed = 2
+  private var ySpeed = 2
   private var dead = false
+
+
+  private var debugLabelSprite = new CPLabelSprite(5, 2, 0, "Testing", C_DARK_CYAN)
 
   private val birdImgs = new CPArrayImage(
     prepSeq(
       """
-        | \\
-        |( ^)>
-        | //
-        |------
-        | //
-        |( -)>
-        | \\
-        |------
-        | }}
-        |( o)>
-        | }}
-        |------
-              """
+         |          ,  ,
+         |          \\ \\
+         |         ) \\ \\     _p_
+         |          )^\))\))  /  *\
+         |           \_|| || / /^`-'
+         |  __       -\ \\--/ /
+         |<'  \\___/   ___. )'
+         |     `====\ )___/\\
+         |           //    //
+         |          `"     `"
+      """
     ).filter(!_.endsWith("------")),
     (ch, _, _) => ch match
       case '^' | '-' => ch & BIRD_EYE_COLOR
       case '>' => ch & BIRD_BEAK_COLOR
       case _ => ch & BIRD_COLOR
-  ).split(5, 3)
+  ).split(26, 10)
 
   private val birdAnis = Seq(CPAnimation.filmStrip("ani", 100.ms, imgs = birdImgs))
   private val birdSpr = new CPAnimationSprite("bird", anis = birdAnis, x = 15, y = 5, z = 10, "ani", false):
@@ -56,28 +60,30 @@ object DragonLifePlayScene extends CPScene("play", None, BG_PX):
             case Some(evt) =>
               evt.key match
                 case KEY_UP =>
-                  yLocation -= 1
+                  yLocation -= ySpeed
                 case KEY_DOWN =>
-                  yLocation += 1
+                  if (yLocation < 30) yLocation += ySpeed
                 case KEY_RIGHT =>
-                  xLocation += 1
+                  xLocation += xSpeed
                 case KEY_LEFT =>
-                  xLocation -= 1
+                  xLocation -= xSpeed
                 case KEY_LO_K | KEY_UP_K =>
                   dead = true
                 case _ => ()
             case None => ()
+        debugLabelSprite.setText("Location: " + xLocation + ", " + yLocation)
         setXY(xLocation, yLocation)
 
 
   addObjects(
     // Exit the game on 'Q' press.
-    CPKeyboardSprite(_.exitGame(), KEY_LO_Q, KEY_UP_Q),
+    //CPKeyboardSprite(_.exitGame(), KEY_LO_Q, KEY_UP_Q),
     birdSpr,
+    debugLabelSprite,
     // Toggle audio on 'Ctrl+A' press.
     //CPKeyboardSprite(_ => toggleAudio(), KEY_CTRL_A),
     // Scene-wide shader holder.
-    new CPOffScreenSprite(shaders = CPFadeInShader(true, 1000.ms, BG_PX).seq)
+    //new CPOffScreenSprite(shaders = CPFadeInShader(true, 1000.ms, BG_PX).seq)
   )
 
 
