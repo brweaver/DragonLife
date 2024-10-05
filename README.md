@@ -11,6 +11,7 @@ Next Time:
 Goals 10/5/2024:
 - ASCII ART Tools (REXPaint & Monodraw, done)
 - Finish project setup. (DONE)
+- Setup project sharing with GIT (DONE)
 
 Goals 9/28/2024: 
 - Design a dragon (Started)
