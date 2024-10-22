@@ -8,10 +8,7 @@ Next Time:
 - Transparency in the sprite?
 
 
-Goals 10/5/2024:
-- ASCII ART Tools (REXPaint & Monodraw, done)
-- Finish project setup. (DONE)
-- Setup project sharing with GIT (DONE)
+
 
 Goals 10/21/2024: 
 - Added basic "Pig" class--start of a Sprite extension for game characters / objects.
@@ -22,9 +19,11 @@ Goals 10/9/2024:
 - sidescrolling engine (view, gravity, ground)
 
 Goals 10/5/2024:
-- ASCII ART Tool
+- ASCII ART Tools (REXPaint & Monodraw, done)
 - Visible platform
-- Animate the dragon (attack, walk)`
+- Animate the dragon (attack, walk)
+- Finish project setup. (DONE)
+- Setup project sharing with GIT (DONE)
 
 Goals 9/28/2024: 
 - Design a dragon (Started)
