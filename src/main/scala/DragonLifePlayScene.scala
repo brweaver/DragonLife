@@ -1,11 +1,14 @@
+import characters.Pig
 import org.cosplay.CPKeyboardKey.*
 import org.cosplay.games.*
-import org.cosplay.games.pong.CPPongPlayScene.addObjects
 import org.cosplay.prefabs.shaders.*
 import org.cosplay.*
 import org.cosplay.CPArrayImage.*
-import org.cosplay.CPColor.C_DARK_CYAN
+import org.cosplay.CPColor.{C_DARK_CYAN, C_GRAY18}
 import org.cosplay.CPPixel.*
+
+val BLUE_BLACK: CPColor = CPColor("0x00015F")
+val BG_PX: CPPixel = ' '&&(C_GRAY18, BLUE_BLACK)
 
 object DragonLifePlayScene extends CPScene("play", None, BG_PX):
 
@@ -80,6 +83,7 @@ object DragonLifePlayScene extends CPScene("play", None, BG_PX):
     //CPKeyboardSprite(_.exitGame(), KEY_LO_Q, KEY_UP_Q),
     birdSpr,
     debugLabelSprite,
+    new Pig().sprite
     // Toggle audio on 'Ctrl+A' press.
     //CPKeyboardSprite(_ => toggleAudio(), KEY_CTRL_A),
     // Scene-wide shader holder.
