@@ -1,21 +1,12 @@
-package characters
+package objects
 
 import org.cosplay.CPArrayImage.prepSeq
 import org.cosplay.{CPAnimation, CPAnimationSprite, CPArrayImage, CPColor, CPSceneObjectContext}
 import org.cosplay.CPPixel.*
 import org.cosplay.*
 
-class Pig {
-
-  private var _xLocation = 10
-  private var _yLocation = 10
-  private var _xSpeed = 2
-  private var _ySpeed = 2
-  private var _dead = false
-
-  def xLocation: Int = _xLocation
-  def yLocation: Int = _yLocation
-
+class Pig extends GeneralObject {
+  
   private val NAME: String = "Pig"
   private val COLOR: CPColor = CPColor("0xff7777")
   private val EYE_COLOR: CPColor = CPColor("0x00ff00")

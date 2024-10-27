@@ -1,7 +1,5 @@
-import characters.Pig
+import objects.Pig
 import org.cosplay.CPKeyboardKey.*
-import org.cosplay.games.*
-import org.cosplay.prefabs.shaders.*
 import org.cosplay.*
 import org.cosplay.CPArrayImage.*
 import org.cosplay.CPColor.{C_DARK_CYAN, C_GRAY18}
