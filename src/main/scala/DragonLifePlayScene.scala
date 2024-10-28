@@ -1,12 +1,9 @@
 import objects.Pig
-import org.cosplay.CPKeyboardKey.*
-import org.cosplay.*
-import org.cosplay.CPArrayImage.*
+import org.cosplay.CPKeyboardKey._
+import org.cosplay._
+import org.cosplay.CPArrayImage._
 import org.cosplay.CPColor.{C_DARK_CYAN, C_GRAY18}
-import org.cosplay.CPPixel.*
-
-val BLUE_BLACK: CPColor = CPColor("0x00015F")
-val BG_PX: CPPixel = ' '&&(C_GRAY18, BLUE_BLACK)
+import org.cosplay.CPPixel._
 
 object DragonLifePlayScene extends CPScene("play", None, BG_PX):
 
@@ -42,7 +39,7 @@ object DragonLifePlayScene extends CPScene("play", None, BG_PX):
       case '^' | '-' => ch & BIRD_EYE_COLOR
       case '>' => ch & BIRD_BEAK_COLOR
       case _ => ch & BIRD_COLOR
-  ).split(26, 10)
+  ).trimBg().split(26, 10)
 
   private val birdAnis = Seq(CPAnimation.filmStrip("ani", 100.ms, imgs = birdImgs))
   private val birdSpr = new CPAnimationSprite("bird", anis = birdAnis, x = 15, y = 5, z = 10, "ani", false):
