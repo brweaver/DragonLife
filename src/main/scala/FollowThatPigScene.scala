@@ -52,7 +52,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   // Player Constants
   private val floor = bgH - BrickImage.getHeight - 3
   private val initJumpVelocity = 22.72f
-  private val gravity = 51.65f
+  private val gravity = 51.65f // Very similar value and calculation from the original Mario game. 
   private var friction = 3.5f
   private val maxVelocityY = 2*initJumpVelocity
   private val maxVelocityX = 10f

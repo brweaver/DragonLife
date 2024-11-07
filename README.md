@@ -3,13 +3,26 @@
 Next Time: 
 - Animate the dragon (attack, walk)
 - Shrink size of characters?
-- Visible platform
+
 - Side-scrolling
 - Transparency in the sprite?
+
+Goals: 
+- Animate Pig based on action (jump, walk, idle, etc)
+- Level design
+  - Discrete? 
+  - Infinite scrolling? 
+- Add environment for jumping, hills, etc. 
+
 
 Learnings:
 World 1-1 from Super Mario Bros is 211x14 blocks.
 Mario is 1 block.
+
+Goals 11/06/2024: 
+- Go over changes that have been added.
+  - jumping
+  - scrolling background (w/parallax)
 
 Goals 10/21/2024: 
 - Added basic "Pig" class--start of a Sprite extension for game characters / objects.
