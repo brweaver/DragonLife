@@ -5,7 +5,7 @@ import org.cosplay.CPArrayImage._
 import org.cosplay.CPColor.{C_DARK_CYAN, C_GRAY18}
 import org.cosplay.CPPixel._
 
-object DragonLifePlayScene extends CPScene("play", None, BG_PX):
+object DragonLifePlayScene extends CPScene("play", None, DragonLifeGame.BG_PX):
 
   private val BIRD_COLOR: CPColor = CPColor("0x0000ff")
   private val BIRD_EYE_COLOR: CPColor = CPColor("0x00ff00")

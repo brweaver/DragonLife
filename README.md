@@ -7,8 +7,9 @@ Next Time:
 - Side-scrolling
 - Transparency in the sprite?
 
-
-
+Learnings:
+World 1-1 from Super Mario Bros is 211x14 blocks.
+Mario is 1 block.
 
 Goals 10/21/2024: 
 - Added basic "Pig" class--start of a Sprite extension for game characters / objects.

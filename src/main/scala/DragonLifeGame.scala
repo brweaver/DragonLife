@@ -2,10 +2,17 @@ import org.cosplay._
 import org.cosplay.CPColor._
 import org.cosplay.CPPixel.&&
 
-val BLUE_BLACK: CPColor = CPColor("0x00015F")
-val BG_PX: CPPixel = ' ' && (C_GRAY18, BLUE_BLACK)
-
 object DragonLifeGame:
+  /** 
+   * Game Constants
+   */
+
+  val BLUE_BLACK: CPColor = CPColor("0x00015F")
+  val BG_PX: CPPixel = ' ' && (C_GRAY18, BLUE_BLACK)
+  val LEVEL_WIDTH = 200
+  val LEVEL_HEIGHT = 40
+  val LEVEL_DIMENSIONS = CPDim(LEVEL_WIDTH, LEVEL_HEIGHT)
+  
   /**
    * Entry point for JVM runtime.
    *
