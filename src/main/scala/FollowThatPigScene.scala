@@ -55,7 +55,9 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   private val gravity = 51.65f
   private var friction = 3.5f
   private val maxVelocityY = 2*initJumpVelocity
-  private val maxVelocityX = 12f
+  private val maxVelocityX = 10f
+  private val initWalkVelocity = 2f
+  private val incrementWalkVelocity = 0.8f
 
   private val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "ani", false):
     private var x = initX.toFloat
@@ -72,7 +74,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
 
 
     private var lastTime = currentTimeMillis()
-    
+
     override def getX: Int = x.round
     override def getY: Int = y.round
 
@@ -85,8 +87,8 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
           // NOTE: if keyboard event is repeated (same key pressed in consecutive frames) -
           // we use smaller movement amount to smooth out the movement. If key press
           // is "new" we move the entire character position to avoid an initial "dead keystroke" feel.
-          case KEY_LO_A | KEY_LEFT => xVelocity -= (if evt.isRepeated then 0.8f else 2.0f)
-          case KEY_LO_D | KEY_RIGHT => xVelocity += (if evt.isRepeated then 0.8f else 2.0f)
+          case KEY_LO_A | KEY_LEFT => xVelocity -= (if evt.isRepeated then incrementWalkVelocity else initWalkVelocity)
+          case KEY_LO_D | KEY_RIGHT => xVelocity += (if evt.isRepeated then incrementWalkVelocity else initWalkVelocity)
           case KEY_LO_W | KEY_UP => if evt.isRepeated && isJumping then isHoldingJump = true else isJumpPressed = true
           case _ => ()
         case None => ()
