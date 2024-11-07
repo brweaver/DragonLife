@@ -10,18 +10,18 @@ import java.lang.System.currentTimeMillis
 
 object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIMENSIONS), DragonLifeGame.BG_PX):
 
-  val bgPx = ' ' && (C_BLACK, C_GRAY1)
-  val bgW = DragonLifeGame.LEVEL_WIDTH
-  val bgH = DragonLifeGame.LEVEL_HEIGHT
+  private val bgPx = ' ' && (C_BLACK, C_GRAY1)
+  private val bgW = DragonLifeGame.LEVEL_WIDTH
+  private val bgH = DragonLifeGame.LEVEL_HEIGHT
 
   // Background Stars & Mountains Sprite
-  val bgCanv = CPCanvas(DragonLifeGame.LEVEL_DIMENSIONS, bgPx)
+  private val bgCanv = CPCanvas(DragonLifeGame.LEVEL_DIMENSIONS, bgPx)
   Engine.paintStars(bgCanv)
   Engine.paintMountains(bgCanv)
-  val fiShdr = new CPFadeInShader(entireFrame = true, durMs = 500.ms, DragonLifeGame.BG_PX)
-  val foShdr = new CPFadeOutShader(true, 300, DragonLifeGame.BG_PX, _.exitGame())
+  private val fiShdr = new CPFadeInShader(entireFrame = true, durMs = 500.ms, DragonLifeGame.BG_PX)
+  private val foShdr = new CPFadeOutShader(true, 300, DragonLifeGame.BG_PX, _.exitGame())
 
-  val bgSpr = new CPImageSprite("bg", img = bgCanv.capture(), false, Seq(fiShdr, foShdr)):
+  private val bgSpr = new CPImageSprite("bg", img = bgCanv.capture(), false, Seq(fiShdr, foShdr)):
     private var lastCamFrame: CPRect = _
     private var xf = initX.toFloat
 
@@ -36,28 +36,28 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       super.render(ctx)
 
   // Brick Sprite (Floor)
-  val brickCanv = CPCanvas(CPDim(bgW, 3), bgPx)
+  private val brickCanv = CPCanvas(CPDim(bgW, 3), bgPx)
   for i <- 0 until bgW / BrickImage.getWidth do brickCanv.drawImage(BrickImage, x = i * 5, y = 0, z = 2)
-  val brickY = bgH - BrickImage.getHeight
-  val brickSpr = new CPStaticImageSprite("bricks", 0, brickY, 2, brickCanv.capture())
+  private val brickY = bgH - BrickImage.getHeight
+  private val brickSpr = new CPStaticImageSprite("bricks", 0, brickY, 2, brickCanv.capture())
 
   // Palm Trees (Foreground Sprite Sequence)
-  val palmY = bgH - BrickImage.getHeight - PalmTreeImage.getHeight
-  val palmSeq = for i <- 0 until 6 yield
+  private val palmY = bgH - BrickImage.getHeight - PalmTreeImage.getHeight
+  private val palmSeq = for i <- 0 until 6 yield
     new CPStaticImageSprite(s"palm$i", CPRand.randInt(10, bgW - 10), palmY, 3, PalmTreeImage.trimBg())
 
   // Player
   private val animation = Seq(CPAnimation.filmStrip("ani", 100.ms, imgs = PigAnimation.replaceBg(_.char == 'x', CPPixel.XRAY).split(8,3)))
 
   // Player Constants
-  val floor = bgH - BrickImage.getHeight - 3
-  val initJumpVelocity = 22.72f
-  val gravity = 51.65f
-  var friction = 3.5f
-  val maxVelocityY = 2*initJumpVelocity
-  val maxVelocityX = 12f
+  private val floor = bgH - BrickImage.getHeight - 3
+  private val initJumpVelocity = 22.72f
+  private val gravity = 51.65f
+  private var friction = 3.5f
+  private val maxVelocityY = 2*initJumpVelocity
+  private val maxVelocityX = 12f
 
-  val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "ani", false):
+  private val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "ani", false):
     private var x = initX.toFloat
     private var y = floor.toFloat
     private var xVelocity = 0f
@@ -66,14 +66,13 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
     private var isHoldingJump = false
     private var isGrounded = true
     private var isJumping = false
-    private var isJumpPressed = false;
+    private var isJumpPressed = false
     private var jumpElapsedTime = 0.toLong
     private var lastJumpTime = 0.toLong
 
 
     private var lastTime = currentTimeMillis()
-
-    //private var
+    
     override def getX: Int = x.round
     override def getY: Int = y.round
 
@@ -88,7 +87,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
           // is "new" we move the entire character position to avoid an initial "dead keystroke" feel.
           case KEY_LO_A | KEY_LEFT => xVelocity -= (if evt.isRepeated then 0.8f else 2.0f)
           case KEY_LO_D | KEY_RIGHT => xVelocity += (if evt.isRepeated then 0.8f else 2.0f)
-          case KEY_LO_W | KEY_UP => (if evt.isRepeated && isJumping then isHoldingJump = true else isJumpPressed = true)
+          case KEY_LO_W | KEY_UP => if evt.isRepeated && isJumping then isHoldingJump = true else isJumpPressed = true
           case _ => ()
         case None => ()
 
@@ -127,20 +126,20 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       if y >= floor.toFloat then
         y = floor
         yVelocity = 0
-      
-      if isJumping then 
+
+      if isJumping then
         if y == floor then // check for landing
           isGrounded = true
           isJumping = false
-      
-      if (!isJumping && isJumpPressed && isGrounded) then
+
+      if !isJumping && isJumpPressed && isGrounded then
         isJumping = true
         yVelocity = yVelocity + initJumpVelocity
         println("Jump!")
-        
-      // Working on changing height of jump depending on how long jump is held. 
-      //if (isJumping && isHoldingJump) then 
-        
+
+      // Working on changing height of jump depending on how long jump is held.
+      //if (isJumping && isHoldingJump) then
+
       // Clear jump button push
       isJumpPressed = false
 
@@ -151,7 +150,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   getCamera.setFocusTrackId(Some("pig"))
   getCamera.setFocusFrameInsets(new CPInsets(hor = 40, vert = 0))
 
-  var objs = List(
+  private var objs = List(
     bgSpr,
     brickSpr,
     pigSpr,
