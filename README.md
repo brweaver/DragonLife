@@ -19,6 +19,9 @@ Learnings:
 World 1-1 from Super Mario Bros is 211x14 blocks.
 Mario is 1 block.
 
+Goals 11/13/2024:
+- Added different animations for different pig states
+
 Goals 11/06/2024: 
 - Go over changes that have been added.
   - jumping
