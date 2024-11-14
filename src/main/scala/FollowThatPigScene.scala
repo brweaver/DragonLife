@@ -1,4 +1,4 @@
-import background.{BrickImage, PalmTreeImage, PigAnimation}
+import background.{BrickImage, PalmTreeImage, PigData}
 import objects.Pig
 import org.cosplay.CPKeyboardKey.*
 import org.cosplay.*
@@ -6,6 +6,7 @@ import org.cosplay.CPArrayImage.*
 import org.cosplay.CPColor.*
 import org.cosplay.CPPixel.*
 import org.cosplay.prefabs.shaders.{CPFadeInShader, CPFadeOutShader}
+
 import java.lang.System.currentTimeMillis
 
 object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIMENSIONS), DragonLifeGame.BG_PX):
@@ -47,7 +48,12 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
     new CPStaticImageSprite(s"palm$i", CPRand.randInt(10, bgW - 10), palmY, 3, PalmTreeImage.trimBg())
 
   // Player
-  private val animation = Seq(CPAnimation.filmStrip("ani", 100.ms, imgs = PigAnimation.replaceBg(_.char == 'x', CPPixel.XRAY).split(8,3)))
+  private val animation = Seq(
+    CPAnimation.filmStrip("walkLeft", 100.ms, imgs = PigData.imgsWalkLeft),
+    CPAnimation.filmStrip("walkRight", 100.ms, imgs = PigData.imgsWalkRight),
+    CPAnimation.filmStrip("idle", 100.ms, imgs = PigData.imgsIdle),
+    CPAnimation.filmStrip("jump", 100.ms, imgs = PigData.imgsJump),
+  )
 
   // Player Constants
   private val floor = bgH - BrickImage.getHeight - 3
@@ -59,7 +65,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   private val initWalkVelocity = 2f
   private val incrementWalkVelocity = 0.8f
 
-  private val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "ani", false):
+  private val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "idle", false):
     private var x = initX.toFloat
     private var y = floor.toFloat
     private var xVelocity = 0f
@@ -133,10 +139,14 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
         if y == floor then // check for landing
           isGrounded = true
           isJumping = false
+      else if (xVelocity <= 1 && xVelocity >= -1) change("idle")
+      else if (xVelocity > 0) change("walkRight")
+      else if (xVelocity < 0) change("walkLeft")
 
       if !isJumping && isJumpPressed && isGrounded then
         isJumping = true
         yVelocity = yVelocity + initJumpVelocity
+        change("jump")
         println("Jump!")
 
       // Working on changing height of jump depending on how long jump is held.

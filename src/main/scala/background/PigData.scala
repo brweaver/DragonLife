@@ -7,7 +7,7 @@ import org.cosplay.CPPixel.*
 
 object PigData {
 
-  private val imgsWalkRight = new CPArrayImage(
+  val imgsWalkRight: Seq[CPImage] = new CPArrayImage(
     prepSeq(
     """
       |xxx__,xx
@@ -23,44 +23,44 @@ object PigData {
   (ch, _, _) => ch match
     case '‘' | '-' => ch & C_BLUE
     case _ => ch & C_PINK1
-  ).split(8,3)
+  ).replaceBg(_.char == 'x', CPPixel.XRAY).split(8,3)
 
-  val imgsWalkLeft = imgsWalkRight.map(_.horFlip())
+  val imgsWalkLeft: Seq[CPImage]  = imgsWalkRight.map(_.horFlip())
 
-  private val imgsIdle = new CPArrayImage(
+  val imgsIdle: Seq[CPImage]  = new CPArrayImage(
     prepSeq(
       """
         |xxx__,xx
         |x໒(xx‘x]
-        |   V V
+        |   P |
         |------
         |xxx__,xx
         |x໒(xx‘x]
-        |   W W
+        |   P >
         |------
         """
     ).filter(!_.endsWith("------")),
     (ch, _, _) => ch match
       case '‘' | '-' => ch & C_BLUE
       case _ => ch & C_PINK1
-  ).split(8, 3)
+  ).replaceBg(_.char == 'x', CPPixel.XRAY).split(8, 3)
 
-  private val imgsJump = new CPArrayImage(
+  val imgsJump: Seq[CPImage]  = new CPArrayImage(
     prepSeq(
       """
         |xxx__,xx
         |x໒(xx‘x]
-        |   V V
+        |   / >
         |------
         |xxx__,xx
         |x໒(xx‘x]
-        |   W W
+        |   > \
         |------
           """
     ).filter(!_.endsWith("------")),
     (ch, _, _) => ch match
       case '‘' | '-' => ch & C_BLUE
       case _ => ch & C_PINK1
-  ).split(8, 3)
+  ).replaceBg(_.char == 'x', CPPixel.XRAY).split(8, 3)
 
 }
