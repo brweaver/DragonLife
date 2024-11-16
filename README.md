@@ -7,11 +7,7 @@ Next Time:
 - Side-scrolling
 - Transparency in the sprite?
 
-Goals: 
-- Animate Pig based on action (jump, walk, idle, etc)
-- Level design
-  - Discrete? 
-  - Infinite scrolling? 
+Goals:
 - Add environment for jumping, hills, etc. 
 
 
@@ -21,6 +17,7 @@ Mario is 1 block.
 
 Goals 11/13/2024:
 - Added different animations for different pig states
+- Decision: Independent levels
 
 Goals 11/06/2024: 
 - Go over changes that have been added.
