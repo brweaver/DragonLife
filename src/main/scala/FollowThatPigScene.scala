@@ -44,7 +44,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
 
   // Palm Trees (Foreground Sprite Sequence)
   private val palmY = bgH - BrickImage.getHeight - PalmTreeImage.getHeight
-  private val palmSeq = for i <- 0 until 6 yield
+  private val palmSeq = for i <- 0 until 24 yield
     new CPStaticImageSprite(s"palm$i", CPRand.randInt(10, bgW - 10), palmY, 3, PalmTreeImage.trimBg())
 
   // Player
