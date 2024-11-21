@@ -91,6 +91,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
 
       var keyLeftPressed = false
       var keyRightPressed = false
+      var keyDownPressed = false
       
       ctx.getKbEvent match
         case Some(evt) => evt.key match
@@ -99,7 +100,8 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
           // we use smaller movement amount to smooth out the movement. If key press
           // is "new" we move the entire character position to avoid an initial "dead keystroke" feel.
           case KEY_LO_A | KEY_LEFT => keyLeftPressed = true
-          case KEY_LO_D | KEY_RIGHT => keyRightPressed = true 
+          case KEY_LO_D | KEY_RIGHT => keyRightPressed = true
+          case KEY_LO_S | KEY_DOWN => keyDownPressed = true
           case KEY_LO_W | KEY_UP => if evt.isRepeated && isJumping then isHoldingJump = true else isJumpPressed = true
           case _ => ()
         case None => ()
@@ -108,18 +110,23 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       val currentTime = currentTimeMillis()
       val dt = (currentTime - lastTime) / 1000.0f
       lastTime = currentTime
-
-      
       
       // Update velocities
       yVelocity = yVelocity - gravity * dt
 
-      if keyRightPressed then
-        xVelocity = if xVelocity < 0 then 0 else Math.max(initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
-      if keyLeftPressed then 
-        xVelocity = if xVelocity > 0 then 0 else Math.min(-initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
-      
-      
+//      if keyRightPressed then
+//        xVelocity = if xVelocity < 0 then 0 else Math.max(initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
+//      if keyLeftPressed then 
+//        xVelocity = if xVelocity > 0 then 0 else Math.min(-initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
+
+      if keyLeftPressed then xVelocity = -maxVelocityX
+      if keyRightPressed then xVelocity = maxVelocityX
+      if keyDownPressed then xVelocity = 0
+
+//      if Math.abs(xVelocity) > maxVelocityX then
+//        xVelocity = xVelocity * maxVelocityX / Math.abs(xVelocity)
+      if Math.abs(yVelocity) > maxVelocityY then
+        yVelocity = yVelocity * maxVelocityY / Math.abs(yVelocity)
       
       // Note, damping doesn't work with cosplay, because you can't hold buttons down well
       // However, consider adding this for sharp turning
@@ -137,10 +144,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
 //        xVelocity = xVelocity * velocityAdjustment
 //        yVelocity = yVelocity * velocityAdjustment
 
-      if Math.abs(xVelocity) > maxVelocityX then
-        xVelocity = xVelocity * maxVelocityX / Math.abs(xVelocity)
-      if Math.abs(yVelocity) > maxVelocityY then
-        yVelocity = yVelocity * maxVelocityY / Math.abs(yVelocity)
+
 
       println(s"vx=$xVelocity vy=$yVelocity")
 
