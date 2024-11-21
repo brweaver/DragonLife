@@ -61,9 +61,10 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   private val gravity = 51.65f // Very similar value and calculation from the original Mario game. 
   private var friction = 3.5f
   private val maxVelocityY = 2*initJumpVelocity
-  private val maxVelocityX = 10f
+  private val maxVelocityX = 20f
   private val initWalkVelocity = 2f
   private val incrementWalkVelocity = 0.8f
+  private val walkVelocityIncreasePercentage = 2.5f
 
   private val pigSpr = new CPAnimationSprite(id = "pig", anis = animation, x = 15, y = floor, z = 4, "idle", false):
     private var x = initX.toFloat
@@ -87,14 +88,18 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
     override def update(ctx: CPSceneObjectContext): Unit =
       // NOTE: we don't need to override 'render(...)' method - it just stays default.
       super.update(ctx)
+
+      var keyLeftPressed = false
+      var keyRightPressed = false
+      
       ctx.getKbEvent match
         case Some(evt) => evt.key match
 
           // NOTE: if keyboard event is repeated (same key pressed in consecutive frames) -
           // we use smaller movement amount to smooth out the movement. If key press
           // is "new" we move the entire character position to avoid an initial "dead keystroke" feel.
-          case KEY_LO_A | KEY_LEFT => xVelocity -= (if evt.isRepeated then incrementWalkVelocity else initWalkVelocity)
-          case KEY_LO_D | KEY_RIGHT => xVelocity += (if evt.isRepeated then incrementWalkVelocity else initWalkVelocity)
+          case KEY_LO_A | KEY_LEFT => keyLeftPressed = true
+          case KEY_LO_D | KEY_RIGHT => keyRightPressed = true 
           case KEY_LO_W | KEY_UP => if evt.isRepeated && isJumping then isHoldingJump = true else isJumpPressed = true
           case _ => ()
         case None => ()
@@ -104,9 +109,18 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       val dt = (currentTime - lastTime) / 1000.0f
       lastTime = currentTime
 
+      
+      
       // Update velocities
       yVelocity = yVelocity - gravity * dt
 
+      if keyRightPressed then
+        xVelocity = if xVelocity < 0 then 0 else Math.max(initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
+      if keyLeftPressed then 
+        xVelocity = if xVelocity > 0 then 0 else Math.min(-initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
+      
+      
+      
       // Note, damping doesn't work with cosplay, because you can't hold buttons down well
       // However, consider adding this for sharp turning
       // if (isGrounded) then // friction only applies on the ground
