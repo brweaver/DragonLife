@@ -92,7 +92,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       var keyLeftPressed = false
       var keyRightPressed = false
       var keyDownPressed = false
-      
+
       ctx.getKbEvent match
         case Some(evt) => evt.key match
 
@@ -110,13 +110,13 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       val currentTime = currentTimeMillis()
       val dt = (currentTime - lastTime) / 1000.0f
       lastTime = currentTime
-      
+
       // Update velocities
       yVelocity = yVelocity - gravity * dt
 
 //      if keyRightPressed then
 //        xVelocity = if xVelocity < 0 then 0 else Math.max(initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
-//      if keyLeftPressed then 
+//      if keyLeftPressed then
 //        xVelocity = if xVelocity > 0 then 0 else Math.min(-initWalkVelocity, xVelocity * walkVelocityIncreasePercentage)
 
       if keyLeftPressed then xVelocity = -maxVelocityX
@@ -127,7 +127,7 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
 //        xVelocity = xVelocity * maxVelocityX / Math.abs(xVelocity)
       if Math.abs(yVelocity) > maxVelocityY then
         yVelocity = yVelocity * maxVelocityY / Math.abs(yVelocity)
-      
+
       // Note, damping doesn't work with cosplay, because you can't hold buttons down well
       // However, consider adding this for sharp turning
       // if (isGrounded) then // friction only applies on the ground
@@ -153,19 +153,20 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
         y = floor
         yVelocity = 0
 
-      if isJumping then
-        if y == floor then // check for landing
+      if isJumping && y == floor then // check for landing
           isGrounded = true
           isJumping = false
-      else if (xVelocity <= 1 && xVelocity >= -1) change("idle")
-      else if (xVelocity > 0) change("walkRight")
-      else if (xVelocity < 0) change("walkLeft")
 
-      if !isJumping && isJumpPressed && isGrounded then
-        isJumping = true
-        yVelocity = yVelocity + initJumpVelocity
-        change("jump")
-        println("Jump!")
+      // Set the animation here
+      if !isJumping then
+        if isJumpPressed && isGrounded then
+          isJumping = true
+          yVelocity = yVelocity + initJumpVelocity
+          change("jump")
+          println("Jump!")
+        else if (xVelocity <= 1 && xVelocity >= -1) change("idle")
+        else if (xVelocity > 0) change("walkRight")
+        else if (xVelocity < 0) change("walkLeft")
 
       // Working on changing height of jump depending on how long jump is held.
       //if (isJumping && isHoldingJump) then
