@@ -21,6 +21,16 @@ Player Capability Ideas:
 * Attack - Stomp
 * Roll
 
+Terrain Ideas:
+* Grass 
+* Hills
+* Forest
+* Mountains
+* Tundra
+* Islands
+* Cave
+* Castle
+* Town
 
 Level Design
 ===============
