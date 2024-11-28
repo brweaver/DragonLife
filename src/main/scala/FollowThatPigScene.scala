@@ -37,11 +37,17 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       super.render(ctx)
 
   // Brick Sprite (Floor)
-  private val brickCanv = CPCanvas(CPDim(bgW, 3), bgPx)
-  for i <- 0 until bgW / BrickImage.getWidth do brickCanv.drawImage(BrickImage, x = i * 5, y = 0, z = 2)
-  private val brickY = bgH - BrickImage.getHeight
+  private val brickHeight = 14
+  
+  private val floor = bgH - BrickImage.getHeight - brickHeight
+  
+  
+  private val brickCanv = CPCanvas(CPDim(bgW, 6), bgPx)
+  //for i <- 0 until bgW / BrickImage.getWidth do brickCanv.drawImage(BrickImage, x = i * 5, y = 0, z = 2)
+  //private val brickY = bgH - 6 // BrickImage.getHeight
   private val brickSpr = new CPStaticImageSprite("bricks", 0, brickY, 2, brickCanv.capture())
-
+  
+  
   // Palm Trees (Foreground Sprite Sequence)
   private val palmY = bgH - BrickImage.getHeight - PalmTreeImage.getHeight
   private val palmSeq = for i <- 0 until 24 yield
@@ -56,7 +62,6 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
   )
 
   // Player Constants
-  private val floor = bgH - BrickImage.getHeight - 3
   private val initJumpVelocity = 22.72f
   private val gravity = 51.65f // Very similar value and calculation from the original Mario game. 
   private var friction = 3.5f

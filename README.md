@@ -1,19 +1,16 @@
 # DragonLife
 
-Next Time: 
+Todo:
 - Animate the dragon (attack, walk)
-- Shrink size of characters?
-
-- Side-scrolling
 - Transparency in the sprite?
-
-Goals:
 - Add environment for jumping, hills, etc. 
-
 
 Learnings:
 World 1-1 from Super Mario Bros is 211x14 blocks.
 Mario is 1 block.
+
+Goals 11/20/2024:
+- Shrink size of characters?
 
 Goals 11/13/2024:
 - Added different animations for different pig states
