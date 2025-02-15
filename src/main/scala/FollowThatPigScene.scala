@@ -37,16 +37,12 @@ object FollowThatPigScene extends CPScene("play", Some(DragonLifeGame.LEVEL_DIME
       super.render(ctx)
 
   // Brick Sprite (Floor)
-  private val brickHeight = 14
-  
+  private val brickHeight = 3
   private val floor = bgH - BrickImage.getHeight - brickHeight
-  
-  
   private val brickCanv = CPCanvas(CPDim(bgW, 6), bgPx)
-  //for i <- 0 until bgW / BrickImage.getWidth do brickCanv.drawImage(BrickImage, x = i * 5, y = 0, z = 2)
-  //private val brickY = bgH - 6 // BrickImage.getHeight
+  for i <- 0 until bgW / BrickImage.getWidth do brickCanv.drawImage(BrickImage, x = i * 5, y = 0, z = 2)
+  private val brickY = bgH - BrickImage.getHeight
   private val brickSpr = new CPStaticImageSprite("bricks", 0, brickY, 2, brickCanv.capture())
-  
   
   // Palm Trees (Foreground Sprite Sequence)
   private val palmY = bgH - BrickImage.getHeight - PalmTreeImage.getHeight
